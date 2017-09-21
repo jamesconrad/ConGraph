@@ -71,6 +71,18 @@ void Console::PrintCenter(const char* text, vec2 topLeftCorner, vec2 bottomRight
 	Print(text, tl, br, hexColour);
 }
 
+void Console::PrintCenter(CHAR_INFO* text, vec2 topLeftCorner, vec2 bottomRightCorner, int length)
+{
+	int width = bottomRightCorner.x - topLeftCorner.x;
+	int left = topLeftCorner.x + width / 2 - length / 2 + 1;
+	int right = left + length - 1;
+
+	vec2 tl(left, topLeftCorner.y);
+	vec2 br(right, bottomRightCorner.y);
+
+	Print(text, tl, br);
+}
+
 void Console::Clear()
 {
 	COORD coordScreen = { 0, 0 };    // home for the cursor

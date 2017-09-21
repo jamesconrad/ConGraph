@@ -38,11 +38,12 @@ public:
 	Console();
 
 	//Initialize, must be called after construction before class use
-	//@param in vec2 screen : the screen size in characters to be used for the console.
+	//@param in vec2 screen : the screen size in characters to be used for the console
 	int Initialize(vec2 screen, const char* title);
 
 	//Convers the char* text into a CHAR_INFO* result
-	//Recomended for use on unchanging or constant ASCII "models" to save on execution time.
+	//Recomended for use on unchanging or constant ASCII "models" to save on execution time
+	//Remember to save the length of the string as it will be needed for printing the centered version
 	void ConvertString(const char * text, CHAR_INFO * result, int hexAttribute);
 
 	//Prints a char string of text in the specificed location
@@ -53,6 +54,9 @@ public:
 
 	//Prints a char string of text centered horizontally within the two corners provided
 	void PrintCenter(const char* text, vec2 topLeftCorner, vec2 bottomRightCorner, int hexColour);
+
+	//Prints a CHAR_INFO string of text resulted from ConvertString centered horizontally between the two corners provided
+	void PrintCenter(CHAR_INFO* text, vec2 topLeftCorner, vec2 bottomRightCorner, int length);
 
 	//Draws the render buffer to the console itself, must be done at the end of the Print commands
 	void Draw();
