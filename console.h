@@ -38,30 +38,29 @@ public:
 	Console();
 
 	//Initialize, must be called after construction before class use
-	//@param in vec2 screen : the screen size in characters to be used for the console
+	//Screen is the size of the console in characters, Title will be the name of the window
 	int Initialize(vec2 screen, const char* title);
 
 	//Convers the char* text into a CHAR_INFO* result
 	//Recomended for use on unchanging or constant ASCII "models" to save on execution time
-	//Remember to save the length of the string as it will be needed for printing the centered version
 	void ConvertString(const char * text, CHAR_INFO * result, int hexAttribute);
 
 	//Prints a char string of text in the specificed location
-	void Print(const char* text, vec2 topLeftCorner, vec2 bottomRightCorner, int hexColour);
+	void Print(const char* text, vec2 position, vec2 artsize, int hexColour);
 	
 	//Prints a preformated CHAR_INFO string of text at the specified location
-	void Print(CHAR_INFO* text, vec2 topLeftCorner, vec2 bottomRightCorner);
+	void Print(CHAR_INFO* text, vec2 position, vec2 artsize);
 
-	//Prints a char string of text centered horizontally within the two corners provided
-	void PrintCenter(const char* text, vec2 topLeftCorner, vec2 bottomRightCorner, int hexColour);
+	//Prints a char string of text centered on the position provided
+	void PrintCenter(const char* text, vec2 position, vec2 artsize, int hexColour);
 
-	//Prints a CHAR_INFO string of text resulted from ConvertString centered horizontally between the two corners provided
-	void PrintCenter(CHAR_INFO* text, vec2 topLeftCorner, vec2 bottomRightCorner, int length);
+	//Prints a CHAR_INFO string of text resulted from ConvertString centered on the position provided
+	void PrintCenter(CHAR_INFO* text, vec2 position, vec2 artsize, int length);
 
 	//Draws the render buffer to the console itself, must be done at the end of the Print commands
 	void Draw();
 
-	//Clears the back buffer, is done after a draw call so is unessicary for external use
+	//Clears the back buffer, must be done before any Print commands each frame
 	void Clear();
 private:
 	SMALL_RECT screenSize;

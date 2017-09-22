@@ -39,48 +39,47 @@ int Console::Initialize(vec2 screen, const char* title)
 	return 0;
 }
 
-void Console::Print(const char* text, vec2 topLeftCorner, vec2 bottomRightCorner, int hexColour)
+void Console::Print(const char* text, vec2 position, vec2 artsize, int hexColour)
 {
 	convString = new CHAR_INFO[strlen(text)];
 	ConvertString(text, convString, hexColour);
 	SMALL_RECT frame = screenSize;
-	frame.Right = bottomRightCorner.x;
-	frame.Left = topLeftCorner.x;
-	frame.Bottom = bottomRightCorner.y;
-	frame.Top = topLeftCorner.y;
-	WriteConsoleOutput(hConsoleBack, convString, bottomRightCorner.coord(), { 0,0 }, &frame);
+	frame.Right = position.x + artsize.x;
+	frame.Left = position.x;
+	frame.Bottom = position.y + artsize.y;
+	frame.Top = position.y;
+	WriteConsoleOutput(hConsoleBack, convString, artsize.coord(), { 0,0 }, &frame);
 	delete[] convString;
 }
 
-void Console::Print(CHAR_INFO* text, vec2 topLeftCorner, vec2 bottomRightCorner)
+void Console::Print(CHAR_INFO* text, vec2 position, vec2 artsize)
 {
 	SMALL_RECT frame = screenSize;
-	WriteConsoleOutput(hConsoleBack, text, bottomRightCorner.coord(), topLeftCorner.coord(), &frame);
+	frame.Right = position.x + artsize.x;
+	frame.Left = position.x;
+	frame.Bottom = position.y + artsize.y;
+	frame.Top = position.y;
+	WriteConsoleOutput(hConsoleBack, text, artsize.coord(), { 0,0 }, &frame);
 }
 
-void Console::PrintCenter(const char* text, vec2 topLeftCorner, vec2 bottomRightCorner, int hexColour)
+void Console::PrintCenter(const char* text, vec2 position, vec2 artsize, int hexColour)
 {
-	int len = strlen(text);
-	int width = bottomRightCorner.x - topLeftCorner.x;
-	int left = topLeftCorner.x + width / 2 - len / 2 + 1;
-	int right = left + len - 1;
+	int left = position.x + artsize.x / 2;
+	int top = position.y + artsize.y / 2;
 
-	vec2 tl(left, topLeftCorner.y);
-	vec2 br(right, bottomRightCorner.y);
+	vec2 np(left, top);
 
-	Print(text, tl, br, hexColour);
+	Print(text, np, artsize, hexColour);
 }
 
-void Console::PrintCenter(CHAR_INFO* text, vec2 topLeftCorner, vec2 bottomRightCorner, int length)
+void Console::PrintCenter(CHAR_INFO* text, vec2 position, vec2 artsize)
 {
-	int width = bottomRightCorner.x - topLeftCorner.x;
-	int left = topLeftCorner.x + width / 2 - length / 2 + 1;
-	int right = left + length - 1;
+	int left = position.x + artsize.x / 2;
+	int top = position.y + artsize.y / 2;
 
-	vec2 tl(left, topLeftCorner.y);
-	vec2 br(right, bottomRightCorner.y);
+	vec2 np(left, top);
 
-	Print(text, tl, br);
+	Print(text, np, artsize);
 }
 
 void Console::Clear()
