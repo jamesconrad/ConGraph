@@ -55,7 +55,7 @@ public:
 	void PrintCenter(const char* text, vec2 position, vec2 artsize, int hexColour);
 
 	//Prints a CHAR_INFO string of text resulted from ConvertString centered on the position provided
-	void PrintCenter(CHAR_INFO* text, vec2 position, vec2 artsize, int length);
+	void PrintCenter(CHAR_INFO* text, vec2 position, vec2 artsize);
 
 	//Draws the render buffer to the console itself, must be done at the end of the Print commands
 	void Draw();
